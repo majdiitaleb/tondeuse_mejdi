@@ -5,7 +5,6 @@ import enumerations.EDirection;
 import exceptions.DeplacementException;
 import exceptions.LigneFormatException;
 import modele.Tondeuse;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,6 +15,7 @@ public class DeplacementControl {
     private final List<Tondeuse> tondeuseList = new ArrayList<>();
     private final List<String> deplacements = new ArrayList<>();
 
+    private List<String> fileLine = new ArrayList<>();
     /*
     lire les lignes du fichiers
     ligne pour limite du fichier
@@ -24,7 +24,12 @@ public class DeplacementControl {
     ligne pour pos tondeuse 2
     ligne pour suite deplacement tondeuse 2
      */
-    public DeplacementControl(List<String> fileLine) throws LigneFormatException {
+    public DeplacementControl(List<String> fileLine)  {
+
+        this.fileLine=fileLine;
+    }
+
+    public List<Tondeuse> deplacerTondeuse() throws LigneFormatException {
 
         System.out.println(fileLine.toString());
         Iterator<String> iterator = fileLine.iterator();
@@ -47,9 +52,20 @@ public class DeplacementControl {
             deplacements.add(listDeplacement.replaceAll("\\s", ""));
 
         }
-    }
+        for(int i=0; i<tondeuseList.size(); i++) {
+            Tondeuse tondeuse = tondeuseList.get(i);
+            String deplacement = deplacements.get(i);
+            try {
+                processTondeuseDeplacement(tondeuse,deplacement);
 
-    public List<Tondeuse> processTondeuse(){
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return tondeuseList;
+    }
+ /*   public List<Tondeuse> processTondeuse(){
 
                 for(int i=0; i<tondeuseList.size(); i++) {
                     Tondeuse tondeuse = tondeuseList.get(i);
@@ -58,13 +74,12 @@ public class DeplacementControl {
                         processTondeuseDeplacement(tondeuse,deplacement);
 
                 }
-                //service.execute(processTondeuseDeplacement(tondeuseList.get(i), deplacements.get(i)));
             catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
                 return tondeuseList;
-    }
+    }*/
 
 
        Tondeuse processTondeuseDeplacement(Tondeuse tondeuse, String deplacement) throws DeplacementException {

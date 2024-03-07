@@ -15,7 +15,9 @@ public class DemarreTondeuse {
 				.replace("file:\\","").replace("file:/","");
 		List<String> fileLine = FileReader.getInstance().read(path);
 
-		List<Tondeuse> list=new DeplacementControl(fileLine).processTondeuse();
+		DeplacementControl deplacementControl=new DeplacementControl(fileLine);
+		//deplacementControl.deplacerTondeuse();
+		List<Tondeuse> list=deplacementControl.deplacerTondeuse();
 		list.forEach(tondeuse -> System.out.println(tondeuse.toString()));
 
 

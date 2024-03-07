@@ -23,7 +23,7 @@ public class FileReader {
     }
 
     public List<String> read(final String fileName) throws FileNotFoundException {
-        List<String> fileLine = new ArrayList<String>();
+        List<String> fileLine = new ArrayList<>();
 
         File file = new File(fileName);
 
